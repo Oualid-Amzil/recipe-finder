@@ -30,7 +30,7 @@ const Recipe = (props) => {
       <div className={classes["recipe-container"]}>
         <h2>{recipeCtx.recipe.strMeal}</h2>
         <div className={classes.ingredients}>
-          <h3>Ingredients</h3>
+          <h3>Ingredients:</h3>
           <ul className={classes["recipe-card__ingredients"]}>
             {ingredients.map((item) => {
               return <li key={ingredients.indexOf(item)}>{item}</li>;
@@ -38,7 +38,7 @@ const Recipe = (props) => {
           </ul>
         </div>
         <div className={classes.method}>
-          <h3>Method</h3>
+          <h3>Method:</h3>
           <p>{recipeCtx.recipe.strInstructions}</p>
         </div>
       </div>

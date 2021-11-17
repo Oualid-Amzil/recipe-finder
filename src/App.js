@@ -7,9 +7,6 @@ import RecipeContext from "./store/recipe-context";
 import "./App.css";
 
 const App = () => {
-  const APP_ID = "40eb15c8";
-  const APP_KEY = "acf45449f4237a99b6aa674e423eba26";
-
   const [recipes, setRecipes] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,33 +14,9 @@ const App = () => {
 
   const recipeCtx = useContext(RecipeContext);
 
-  // useEffect(() => {
-  //   const getRecipes = setTimeout(async () => {
-  //     const response = await fetch(
-  //       `https://api.edamam.com/search?q=${inputValue}&app_id=${APP_ID}&app_key=${APP_KEY}`
-  //     );
-  //     const data = await response.json();
-  //     setRecipes(data.hits);
-  //     console.log(data.hits);
-  //   }, 500);
-
-  //   return () => {
-  //     clearTimeout(getRecipes);
-  //   };
-  // }, [inputValue]);
-
   const inputChangeHandler = (event) => {
     setInputValue(event.target.value);
   };
-
-  // const searchHandler = async () => {
-  //   const response = await fetch(
-  //     `https://api.edamam.com/search?q=${inputValue}&app_id=${APP_ID}&app_key=${APP_KEY}`
-  //   );
-  //   const data = await response.json();
-  //   setRecipes(data.hits);
-  //   console.log(recipes);
-  // };
 
   const submitHandler = async (event) => {
     event.preventDefault();
