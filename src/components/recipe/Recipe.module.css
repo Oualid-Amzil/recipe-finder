@@ -28,6 +28,10 @@
   transform: scale(1.1);
 }
 
+.method p {
+  text-indent: 62px;
+}
+
 .image {
   width: 50%;
   height: 100%;
@@ -96,5 +100,11 @@
 
   .image {
     width: 30%;
+  }
+}
+
+@media (max-width: 761px) {
+  .method p {
+    text-indent: 0;
   }
 }

@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 
+import axios from "axios";
 import Form from "./components/form/Form";
 import Card from "./components/card/Card";
 import Recipe from "./components/recipe/Recipe";
 import RecipeContext from "./store/recipe-context";
+import Loader from "./UI/Loader";
 import "./App.css";
 
 const App = () => {
@@ -24,27 +26,38 @@ const App = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong!");
-      }
-      const data = await response.json();
+      if (inputValue.trim().length > 0) {
+        const response = await axios.get(
+          `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`
+        );
 
-      if (data.meals) {
-        setRecipes(data.meals);
-      } else {
-        setRecipes([]);
+        if (response.data.meals) {
+          setRecipes(response.data.meals);
+        } else {
+          setRecipes([]);
+        }
+        console.log(recipes);
+        setInputValue("");
       }
-      console.log(recipes);
-
-      setInputValue("");
     } catch (error) {
       setError(error.message);
     }
     setIsLoading(false);
   };
+
+  let content = <h2>Found no recipes.</h2>;
+
+  if (recipes.length > 0) {
+    content = <Card recipes={recipes} />;
+  }
+
+  if (error) {
+    content = <h2 style={{ color: "red" }}>{error}</h2>;
+  }
+
+  if (isLoading) {
+    content = <Loader />;
+  }
 
   return (
     <div className="app-container">
@@ -57,10 +70,7 @@ const App = () => {
             onChangeHandler={inputChangeHandler}
             onSubmitHandler={submitHandler}
           />
-          {!isLoading && recipes.length > 0 && <Card recipes={recipes} />}
-          {!isLoading && recipes.length === 0 && <h2>Found no recipes.</h2>}
-          {isLoading && <h2>Loading...</h2>}
-          {!isLoading && error && <h2>{error}</h2>}
+          {content}
         </React.Fragment>
       )}
     </div>
